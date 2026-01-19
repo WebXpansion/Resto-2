@@ -81,6 +81,10 @@ button{
    CARTES – DESIGN ÉTAPES
 ========================= */
 
+.card.card-none {
+  height: 60px;
+}
+
 .card {
   display: flex;
   gap: 8px;

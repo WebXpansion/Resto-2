@@ -15,6 +15,7 @@ const STEPS = [
 let stepIndex = 0
 let selectedItem = null
 let previewItem = null
+let hasSelection = false
 
 // ===============================
 // 🎯 ELEMENTS UI
@@ -24,7 +25,7 @@ const sheetBackBtn = document.getElementById('sheet-back')
 const stepPrefix = document.getElementById('step-prefix')
 const stepTitle = document.getElementById('step-title')
 
-const skipBtn = document.getElementById('skip')
+
 const nextBtn = document.getElementById('next')
 
 const overlay = document.getElementById('overlay')
@@ -37,6 +38,7 @@ const overlaySelectBtn = document.getElementById('overlay-select')
 
 const stepCurrent = document.getElementById('step-current')
 const stepTotal = document.getElementById('step-total')
+const stepBackBtn = document.getElementById('step-back')
 
 stepTotal.textContent = STEPS.length
 
@@ -65,10 +67,26 @@ function startStep() {
   const step = STEPS[stepIndex]
   animateTitle(step.label)
 
+  const stepFooter = document.querySelector('.step-footer')
+
+if (stepIndex === 0) {
+  stepFooter.classList.add('single')
+} else {
+  stepFooter.classList.remove('single')
+}
+
+
   stepCurrent.textContent = stepIndex + 1
 
+  // bouton retour visible à partir de l’étape 2
+  if (stepIndex > 0) {
+    stepBackBtn.classList.remove('hidden')
+  } else {
+    stepBackBtn.classList.add('hidden')
+  }
 
   selectedItem = null
+  hasSelection = false
   updateFooter()
 
   renderStep(step.key)
@@ -77,6 +95,13 @@ function startStep() {
 sheetBackBtn.addEventListener('click', () => {
   previewItem = null
   closeOverlay()
+})
+
+stepBackBtn.addEventListener('click', () => {
+  if (stepIndex === 0) return
+
+  stepIndex--
+  startStep()
 })
 
 
@@ -115,29 +140,28 @@ window.openOverlay = (item) => {
 overlaySelectBtn.addEventListener('click', () => {
   if (!previewItem) return
 
-  // reset anciennes cartes
-  document.querySelectorAll('.card.selected').forEach(card => {
+  // reset toutes les cartes
+  document.querySelectorAll('.card').forEach(card =>
     card.classList.remove('selected')
-    card.querySelector('.select-btn').textContent = 'Voir'
-  })
-
-  // retrouver la carte
-  const btn = document.querySelector(
-    `.select-btn[data-id="${previewItem.id}"]`
   )
 
-  if (btn) {
-    const card = btn.closest('.card')
-    card.classList.add('selected')
-    btn.textContent = 'Sélectionné'
-  }
+  // retrouver la carte correspondante
+  const cards = document.querySelectorAll('.card')
+  cards.forEach(card => {
+    const title = card.querySelector('h3')
+    if (title && title.textContent === previewItem.title) {
+      card.classList.add('selected')
+    }
+  })
 
   selectedItem = previewItem
   previewItem = null
+  hasSelection = true
 
   closeOverlay()
   updateFooter()
 })
+
 
 // ===============================
 // ❌ FERMETURE OVERLAY
@@ -153,6 +177,14 @@ function closeOverlay() {
   }, 300)
   
 }
+
+
+window.setSelectedItem = (item) => {
+  selectedItem = item 
+  hasSelection = true
+  updateFooter()
+}
+
 
 // ===============================
 // 🎬 TITRE ANIMÉ
@@ -171,7 +203,7 @@ function animateTitle(label) {
 // 🦶 FOOTER
 // ===============================
 function updateFooter() {
-  if (selectedItem) {
+  if (hasSelection) {
     nextBtn.disabled = false
     nextBtn.textContent = 'Continuer'
   } else {
@@ -181,18 +213,17 @@ function updateFooter() {
 }
 
 
+
 // ===============================
 // 👉 NAVIGATION
 // ===============================
 nextBtn.addEventListener('click', () => {
-  if (!selectedItem) return
+  if (!hasSelection) return
   goNext()
 })
 
-skipBtn.addEventListener('click', () => {
-  selectedItem = null
-  goNext()
-})
+
+
 
 function goNext() {
   stepIndex++
