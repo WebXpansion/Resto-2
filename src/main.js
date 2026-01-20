@@ -259,13 +259,19 @@ document.getElementById('overlay-confirm').addEventListener('click', () => {
     })
   }
 
-
   previewItem = null
-
   closeOverlay()
-  renderStep(STEPS[stepIndex].key)
+
+  // ✅ BON RENDER SELON L’ÉTAPE
+  if (STEPS[stepIndex].key === 'recap') {
+    renderRecap()
+  } else {
+    renderStep(STEPS[stepIndex].key)
+  }
+
   updateFooter()
 })
+
 
 
 
@@ -407,14 +413,17 @@ function renderRecap() {
         <div class="info">
           <div class="info-titre">
             <h3>${item.title}</h3>
-
+            <p>${item.description}</p>
             <div class="price-row">
               <span class="price">${Number(item.price).toFixed(2)}€</span>
               <span class="separator">|</span>
               <span class="qty">Qté : ${quantity}</span>
             </div>
+            <button class="btn-replace" data-category="${item.category}">
+              Remplacer
+            </button>
 
-            <p>${item.description}</p>
+
           </div>
         </div>
       `
@@ -424,6 +433,25 @@ function renderRecap() {
       wrapper.appendChild(card)
 
       grid.appendChild(wrapper)
+
+      const replaceBtn = card.querySelector('.btn-replace')
+
+      replaceBtn.addEventListener('click', (e) => {
+        e.stopPropagation() // ⛔ empêche le clic carte
+      
+        const targetCategory = item.category
+      
+        const targetIndex = STEPS.findIndex(
+          step => step.key === targetCategory
+        )
+      
+        if (targetIndex !== -1) {
+          stepIndex = targetIndex
+          startStep()
+        }
+      })
+      
+
     })
   })
 }

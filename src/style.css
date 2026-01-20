@@ -518,3 +518,15 @@ span.none-text {
 .price-row .qty {
   font-weight: 500;
 }
+
+button.btn-replace {
+  width: fit-content;
+  font-size: 12px;
+  margin-top: 11px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background-color: white;
+  border: 1px solid #00000014;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+}
