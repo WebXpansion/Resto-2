@@ -576,3 +576,21 @@ button.btn-replace {
   padding: 15px;
   font-family: "Italiana", serif;
 }
+
+.card .info {
+  position: relative;
+}
+
+.card-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+}
+
+img.card-check {
+  width: 16px!important;
+  height: 16px!important;
+  padding: 12px!important;
+}

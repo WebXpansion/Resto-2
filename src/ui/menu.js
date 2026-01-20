@@ -25,7 +25,7 @@ export function renderStep(category) {
             <div class="price-row">
               <span class="price">${Number(item.price).toFixed(2)}€</span>
               ${
-                entry
+                entry && entry.quantity > 0
                   ? `<span class="separator">|</span>
                      <span class="qty">Qté : ${entry.quantity}</span>`
                   : ''
@@ -34,6 +34,15 @@ export function renderStep(category) {
           </div>
         </div>
       `
+
+      // ✅ Icône check si quantité > 0
+      if (entry && entry.quantity > 0) {
+        const check = document.createElement('img')
+        check.src = '/images/check.svg'
+        check.alt = 'Sélectionné'
+        check.className = 'card-check'
+        card.querySelector('.info').appendChild(check)
+      }
 
       card.addEventListener('click', () => {
         window.openOverlay(item)

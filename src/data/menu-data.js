@@ -10,14 +10,14 @@ export const MENU = [
       scale: 18
     },
     {
-      id: 'ice-tea',
+      id: 'Coca',
       category: 'drink',
-      title: 'Ice Tea',
+      title: 'Coca',
       description: '',
       price: 4.50,
-      image: '/images/ice-tea.webp',
-      model: null,
-      scale: 18
+      image: '/images/coca.webp',
+      model: 'coca.glb',
+      scale: 12
     },
     {
       id: 'pizza-mozza',
