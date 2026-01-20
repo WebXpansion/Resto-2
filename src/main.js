@@ -128,7 +128,7 @@ function startStep() {
   // ===============================
   if (isRecap) {
     stepHeader.classList.add('recap')
-    stepTitle.textContent = 'Votre récap'
+    stepTitle.textContent = 'Votre récapitulatif'
   } else {
     stepHeader.classList.remove('recap')
     animateTitle(step.label)
@@ -461,6 +461,15 @@ function renderRecap() {
   const grid = document.getElementById('menu-grid')
   grid.innerHTML = ''
 
+
+  const info = document.createElement('p')
+      info.className = 'recap-info'
+      info.textContent =
+        'Veuillez patienter, un membre de notre équipe va prendre en charge votre commande.'
+
+      grid.appendChild(info)
+
+      
   const hasAnySelection = Object.values(selections)
     .some(list => list.length > 0)
 
@@ -511,6 +520,9 @@ function renderRecap() {
       wrapper.appendChild(card)
 
       grid.appendChild(wrapper)
+
+      
+
 
       const replaceBtn = card.querySelector('.btn-replace')
 

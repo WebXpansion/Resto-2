@@ -401,3 +401,14 @@ button{
 }
 
 
+
+.recap-info {
+  padding: 0px 15px;
+  text-align: left;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  opacity: 0.6;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  margin-top: -10px;
+}
