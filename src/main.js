@@ -82,6 +82,19 @@ const STEPS_WITHOUT_RECAP = STEPS.filter(step => step.key !== 'recap')
 stepTotal.textContent = STEPS_WITHOUT_RECAP.length
 
 
+function animateCards() {
+  const rows = document.querySelectorAll('.card-row')
+
+  rows.forEach((row, index) => {
+    row.classList.remove('visible')
+
+    setTimeout(() => {
+      row.classList.add('visible')
+    }, index * 80) // ⏱️ décalage entre cartes
+  })
+}
+
+
 // ===============================
 // 🎬 INTRO
 // ===============================
@@ -160,14 +173,17 @@ function startStep() {
   // ===============================
   if (isRecap) {
     renderRecap()
+    requestAnimationFrame(animateCards)
     return
   }
+  
 
   // ===============================
   // 🧭 ÉTAPES NORMALES
   // ===============================
   updateFooter()
   renderStep(step.key)
+  requestAnimationFrame(animateCards)
 }
 
 
@@ -293,6 +309,7 @@ document.getElementById('overlay-confirm').addEventListener('click', () => {
   }
 
   updateFooter()
+  requestAnimationFrame(animateCards)
 })
 
 

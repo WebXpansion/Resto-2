@@ -84,6 +84,22 @@ button{
   height: 60px;
 }
 
+/* État initial (avant animation) */
+.card-row {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* État animé */
+.card-row.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+
 .card {
   display: flex;
   gap: 8px;
